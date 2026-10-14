@@ -1,0 +1,8 @@
+{
+  "name": "Upbeat Abroad Education",
+  "description": "Premier India-based, virtual-first study abroad consultancy offering AI-powered university recommendations, profile evaluation, Russell Group & Go8 pathways, visa guidance, and 1-on-1 counseling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

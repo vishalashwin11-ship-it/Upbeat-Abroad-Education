@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none">
+  <!-- UAE Brand Letters -->
+  <g fill="#0B192C">
+    <!-- U -->
+    <path d="M 40 120 C 40 135 52 145 68 145 C 84 145 96 135 96 120 L 96 72 L 84 72 L 84 118 C 84 128 77 134 68 134 C 59 134 52 128 52 118 L 52 72 L 40 72 Z"/>
+    <rect x="36" y="70" width="20" height="4"/>
+    <rect x="80" y="70" width="20" height="4"/>
+    
+    <!-- A -->
+    <path d="M 125 145 L 138 145 L 152 72 L 140 72 L 115 145 Z" fill="#0B192C"/>
+    <path d="M 152 72 L 166 145 L 179 145 L 152 72 Z" fill="#0B192C"/>
+    <!-- Crossbar of A - curved arch like in the logo -->
+    <path d="M 128 126 Q 146 112 164 126 Q 146 118 128 126 Z" fill="#0B192C"/>
+
+    <!-- E -->
+    <path d="M 198 72 L 198 145 L 245 145 L 245 133 L 210 133 L 210 114 L 238 114 L 238 103 L 210 103 L 210 83 L 243 83 L 243 72 Z"/>
+    <rect x="194" y="70" width="16" height="4"/>
+    <rect x="194" y="143" width="16" height="4"/>
+  </g>
+
+  <!-- Airplane climbing diagonally -->
+  <g transform="translate(140, 20) rotate(-22)">
+    <!-- Jet Fuselage -->
+    <path d="M 0 30 C 15 28 65 24 115 16 C 130 14 142 8 152 5 C 145 14 130 24 110 32 C 70 42 20 46 0 46 C -12 46 -15 32 0 30 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+    
+    <!-- Swept Wings -->
+    <path d="M 45 32 L -15 78 L -5 80 L 70 38 Z" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1"/>
+    
+    <!-- Left Wing -->
+    <path d="M 68 25 L 35 -15 L 45 -14 L 85 22 Z" fill="#CBD5E1"/>
+
+    <!-- Tail Fin with Red/Orange Accent -->
+    <path d="M -8 34 L -32 -2 C -28 -3 -15 0 -8 18 Z" fill="#EA580C"/>
+    <path d="M -18 12 L -32 -2 L -25 -2 L -12 14 Z" fill="#DC2626"/>
+
+    <!-- Under-wing Turbofan Engine with Orange Nacelle -->
+    <ellipse cx="25" cy="58" rx="14" ry="6" fill="#F97316"/>
+    <ellipse cx="23" cy="58" rx="11" ry="4" fill="#C2410C"/>
+    <ellipse cx="62" cy="10" rx="9" ry="3.5" fill="#EA580C"/>
+    
+    <!-- Cockpit Windows -->
+    <path d="M 142 8 Q 146 7 148 6 Q 144 11 138 13 Z" fill="#334155"/>
+  </g>
+
+  <!-- Subtitle Text -->
+  <text x="142" y="165" font-family="'Plus Jakarta Sans', 'Times New Roman', serif" font-size="11" letter-spacing="4" fill="#475569" font-weight="600" text-anchor="middle">
+    UPBEAT ABROAD EDUCATION
+  </text>
+</svg>
