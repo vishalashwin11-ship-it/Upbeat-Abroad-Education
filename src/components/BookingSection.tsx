@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Counselor } from '../types';
 import { Calendar as CalendarIcon, Clock, Video, Phone, CheckCircle2, Star, ShieldCheck, User, Mail, Globe, MapPin, X, Copy, ExternalLink } from 'lucide-react';
+import { COUNSELORS } from '../data/counselors';
+import { sendBooking } from '../lib/supabase';
 
 interface BookingSectionProps {
   onSuccess?: () => void;
 }
 
 export const BookingSection: React.FC<BookingSectionProps> = () => {
-  const [counselors, setCounselors] = useState<Counselor[]>([]);
+  const [counselors, setCounselors] = useState<Counselor[]>(COUNSELORS);
   const [selectedCounselorId, setSelectedCounselorId] = useState<string>('counselor-1');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
@@ -87,32 +89,36 @@ export const BookingSection: React.FC<BookingSectionProps> = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentName,
-          email,
-          phone,
-          counselorId: activeCounselor.id,
-          date: selectedDate,
-          timeSlot: selectedTimeSlot,
-          mode: consultationMode,
-          destinations,
-          degreeLevel,
-          notes,
-        }),
+      const res = await sendBooking({
+        studentName,
+        email,
+        phone,
+        counselorId: activeCounselor.name,
+        date: selectedDate,
+        timeSlot: selectedTimeSlot,
+        mode: consultationMode,
+        destinations,
+        degreeLevel,
+        notes,
       });
 
-      const resData = await response.json();
-
-      if (!response.ok) {
-        setErrorMsg(resData.error || 'Failed to complete booking. Please try another slot.');
+      if (!res.success) {
+        setErrorMsg(res.error || 'Failed to complete booking. Please try another slot.');
         setSubmitting(false);
         return;
       }
 
-      setConfirmationData(resData.booking);
+      setConfirmationData(res.booking || {
+        studentName,
+        email,
+        phone,
+        counselorName: activeCounselor.name,
+        date: selectedDate,
+        timeSlot: selectedTimeSlot,
+        mode: consultationMode,
+        reference: `UAE-BKG-${Date.now().toString(36).toUpperCase()}`,
+        status: 'confirmed',
+      });
       setSubmitting(false);
     } catch (err) {
       console.error('Booking request failed:', err);

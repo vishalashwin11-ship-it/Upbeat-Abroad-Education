@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, ShieldCheck, Database, Sparkles, AlertCircle, ArrowRight } from 'lucide-react';
+import { sendStudentEnquiry } from '../lib/supabase';
 
 interface StudentEnquirySectionProps {
   onSuccess?: () => void;
@@ -81,36 +82,28 @@ export const StudentEnquirySection: React.FC<StudentEnquirySectionProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch('/api/enquiries', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          full_name: fullName.trim(),
-          email: email.trim().toLowerCase(),
-          phone: phone.trim(),
-          preferred_destination: preferredDestination.trim(),
-          intended_course: intendedCourse.trim(),
-          intake: intake.trim(),
-          current_education: currentEducation,
-          academic_score: academicScore.trim(),
-          budget_per_year: budgetPerYear,
-          message: message.trim(),
-        }),
+      const result = await sendStudentEnquiry({
+        full_name: fullName.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim(),
+        preferred_destination: preferredDestination.trim(),
+        intended_course: intendedCourse.trim(),
+        intake: intake.trim(),
+        current_education: currentEducation,
+        academic_score: academicScore.trim(),
+        budget_per_year: budgetPerYear,
+        message: message.trim(),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErrorMessage(data.error || 'Failed to submit enquiry. Please check your inputs.');
+      if (!result.success) {
+        setErrorMessage(result.error || 'Failed to submit enquiry. Please check your inputs.');
         setLoading(false);
         return;
       }
 
       setSuccessResult({
-        reference: data.reference || data.enquiry?.reference || `UAE-ENQ-${Date.now().toString().slice(-6)}`,
-        savedToSupabase: data.savedToSupabase ?? data.enquiry?.saved_to_supabase,
+        reference: result.reference,
+        savedToSupabase: result.savedToSupabase,
         full_name: fullName,
         preferred_destination: preferredDestination,
         intended_course: intendedCourse,

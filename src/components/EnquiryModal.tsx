@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ArrowRight, ArrowLeft, Send, Database, AlertCircle } from 'lucide-react';
+import { sendStudentEnquiry } from '../lib/supabase';
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -94,34 +95,33 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
     setSubmitting(true);
 
     try {
-      const res = await fetch('/api/enquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          full_name: fullName.trim(),
-          email: email.trim().toLowerCase(),
-          phone: phone.trim(),
-          preferred_destination: preferredDestination.trim(),
-          intended_course: intendedCourse.trim(),
-          intake: intake.trim(),
-          current_education: currentEducation,
-          academic_score: academicScore.trim(),
-          budget_per_year: budgetPerYear,
-          services_needed: servicesNeeded,
-          message: message.trim(),
-        }),
+      const result = await sendStudentEnquiry({
+        full_name: fullName.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim(),
+        preferred_destination: preferredDestination.trim(),
+        intended_course: intendedCourse.trim(),
+        intake: intake.trim(),
+        current_education: currentEducation,
+        academic_score: academicScore.trim(),
+        budget_per_year: budgetPerYear,
+        services_needed: servicesNeeded,
+        message: message.trim(),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        setErrorMsg(data.error || 'Failed to submit enquiry.');
+      if (!result.success) {
+        setErrorMsg(result.error || 'Failed to submit enquiry.');
         setSubmitting(false);
         return;
       }
 
       setSubmissionSuccess({
-        ...data.enquiry,
-        savedToSupabase: data.savedToSupabase,
+        reference: result.reference,
+        full_name: fullName,
+        preferred_destination: preferredDestination,
+        intended_course: intendedCourse,
+        intake,
+        savedToSupabase: result.savedToSupabase,
       });
       setSubmitting(false);
     } catch (err) {

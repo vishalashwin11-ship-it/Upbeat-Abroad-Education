@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, MessageSquare, Clock, Send, CheckCircle2, Globe, ExternalLink } from 'lucide-react';
+import { sendStudentEnquiry } from '../lib/supabase';
 
 interface ContactSectionProps {
   onOpenBooking: () => void;
@@ -19,16 +20,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
     setLoading(true);
 
     try {
-      await fetch('/api/enquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          destination: subject,
-          message,
-        }),
+      await sendStudentEnquiry({
+        full_name: name,
+        email,
+        phone,
+        preferred_destination: subject,
+        intended_course: 'General Advisory & Contact Inquiry',
+        message,
       });
       setSent(true);
       setName('');
